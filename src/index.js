@@ -16,10 +16,24 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 // Setup static directory to serve (html, css, images, js)
 app.use(express.static(publicDirectoryPath))
 
+let count = 0
 
+// Server listening for an event from the client (auto done)
 // event for when socket gets new connection
-io.on('connect', () =>{
+io.on('connect', (socket) =>{
     console.log('New WebSocket connection')
+
+    // Server emitting an event for the Client to listen
+    socket.emit('countUpdated', count)
+
+    // Server listening for an event from the client
+    socket.on('increment', () => {
+        count++
+        // emits to that single connection
+        // socket.emit('countUpdated', count)
+        // emits to all connection
+        io.emit('countUpdated', count)
+    })
 })
 
 server.listen(port, () => {
