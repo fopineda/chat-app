@@ -17,19 +17,25 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 app.use(express.static(publicDirectoryPath))
 
 
-// Server listening for an event from the client (auto done)
-// event for when socket gets new connection
+// Event for when socket gets new connection
 io.on('connect', (socket) =>{
     console.log('New WebSocket connection')
 
     // Server emitting message event
     let welcomeMessage = "Welcome!"
     socket.emit('message', welcomeMessage)
+    // Server emitting message to everyone except that single socket (new user)
+    socket.broadcast.emit('message', 'New user has joined chat...')
 
     // Server receiving broadcast message event
     socket.on('sendMessage', (broadcastMessage) => {
-        // Server emitting broadcast message event as message event
+        // Server emitting broadcast message event as message event (everyone)
         io.emit('message', broadcastMessage)
+    })
+
+    // Event for when get socket get disconnected
+    socket.on('disconnect', () => {
+        io.emit('message', 'User has left chat...')
     })
 })
 
