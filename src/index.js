@@ -33,10 +33,18 @@ io.on('connect', (socket) =>{
         io.emit('message', broadcastMessage)
     })
 
+    // Server receiving location event
+    socket.on('sendLocation', (coords) => {
+        // Server emitting broadcast message event as message event (everyone)
+        io.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+    })
+
     // Event for when get socket get disconnected
     socket.on('disconnect', () => {
         io.emit('message', 'User has left chat...')
     })
+
+
 })
 
 server.listen(port, () => {

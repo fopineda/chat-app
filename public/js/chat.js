@@ -12,3 +12,18 @@ broadcastForm.addEventListener('submit', (e) => {
     // Client emits broadcast message event
     socket.emit('sendMessage', broadcastMessage)
 })
+
+document.querySelector('#send-location').addEventListener('click', () => {
+    if (!navigator.geolocation){
+        return alert('Geolocation is not supported by your browser...')
+    }
+
+    // Client emitting location event
+    navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position)
+        socket.emit('sendLocation',  {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        })
+    })
+})
