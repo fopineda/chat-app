@@ -24,8 +24,8 @@ io.on('connect', (socket) => {
     console.log('New WebSocket connection')
 
     // Server emitting message event
-    let welcomeMessage = "Welcome!"
-    socket.emit('message', welcomeMessage)
+    let message = "Welcome!"
+    socket.emit('message', message)
     // Server emitting message to everyone except that single socket (new user)
     socket.broadcast.emit('message', 'New user has joined chat...')
 
