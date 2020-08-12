@@ -2,6 +2,7 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
+const Filter = require('bad-words')
 
 // configure web server and socket
 const app = express()
@@ -17,8 +18,9 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 app.use(express.static(publicDirectoryPath))
 
 
+
 // Event for when socket gets new connection
-io.on('connect', (socket) =>{
+io.on('connect', (socket) => {
     console.log('New WebSocket connection')
 
     // Server emitting message event
@@ -28,15 +30,22 @@ io.on('connect', (socket) =>{
     socket.broadcast.emit('message', 'New user has joined chat...')
 
     // Server receiving broadcast message event
-    socket.on('sendMessage', (broadcastMessage) => {
+    socket.on('sendMessage', (broadcastMessage, callback) => {
+        // checks if profanity is used in broadcast message
+        const filter = new Filter()
+        if (filter.isProfane(broadcastMessage)){
+            return callback('Profanity is not allowed...')
+        }
         // Server emitting broadcast message event as message event (everyone)
         io.emit('message', broadcastMessage)
+        callback()
     })
 
     // Server receiving location event
-    socket.on('sendLocation', (coords) => {
+    socket.on('sendLocation', (coords, callback) => {
         // Server emitting broadcast message event as message event (everyone)
         io.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+        callback()
     })
 
     // Event for when get socket get disconnected
@@ -46,6 +55,10 @@ io.on('connect', (socket) =>{
 
 
 })
+
+
+
+
 
 server.listen(port, () => {
     console.log('Server has successfully started on port: '+ port)
