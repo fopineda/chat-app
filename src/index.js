@@ -40,6 +40,12 @@ io.on('connect', (socket) => {
         // Server emitting message to everyone in a particular room except that single socket (new user) 
         socket.broadcast.to(user.room).emit('message', generateMessage('Robot', `${user.username} has joined chat...`))
 
+        // Server emitting room data (everyone in room)
+        io.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom(user.room)
+        })
+
         // successful join so call the callback()
         callback()
     })
@@ -80,6 +86,11 @@ io.on('connect', (socket) => {
         if (user) {
             // Server emitting message event (everyone in room)
             io.to(user.room).emit('message', generateMessage('Robot', `${user.username} has left chat...`))
+            // Server emitting room data (everyone in room)
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUsersInRoom(user.room)
+            })
         }        
     })
 
