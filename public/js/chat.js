@@ -69,4 +69,10 @@ document.querySelector('#send-location').addEventListener('click', () => {
 })
 
 // Client emitting join event
-socket.emit('join', { username, room })
+socket.emit('join', { username, room }, (error) => {
+    if (error) {
+        alert(error)
+        // Global location to send to home page
+        location.href = '/'
+    }
+})
