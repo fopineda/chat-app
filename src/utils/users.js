@@ -14,11 +14,11 @@ const addUser = ({ id, username, room }) => {
 
     // Check for existing user
     const existingUser = users.find((user) => {
-        return user.room === room && user.username == username
+        return user.room === room && user.username === username
     })
 
     // validate username
-    if (existingUser) {
+    if (existingUser || username === "robot") {
         return {
             error: 'Username is in use!'
         }

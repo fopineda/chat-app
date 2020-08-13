@@ -36,9 +36,9 @@ io.on('connect', (socket) => {
         // allows to join a room
         socket.join(user.room)
         // Server emitting message event
-        socket.emit('message', generateMessage('Welcome!'))
+        socket.emit('message', generateMessage('Robot', `Welcome ${user.username}!`))
         // Server emitting message to everyone in a particular room except that single socket (new user) 
-        socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined chat...`))
+        socket.broadcast.to(user.room).emit('message', generateMessage('Robot', `${user.username} has joined chat...`))
 
         // successful join so call the callback()
         callback()
@@ -47,29 +47,39 @@ io.on('connect', (socket) => {
 
     // Server receiving broadcast message event
     socket.on('sendMessage', (broadcastMessage, callback) => {
+        // get user by their socket id
+        const user = getUser(socket.id)
+
         // checks if profanity is used in broadcast message
         const filter = new Filter()
         if (filter.isProfane(broadcastMessage)){
             return callback('Profanity is not allowed...')
         }
-        // Server emitting broadcast message event as message event (everyone)
-        io.emit('message', generateMessage(broadcastMessage))
+        // Server emitting broadcast message event as message event (everyone in room)
+        io.to(user.room).emit('message', generateMessage(user.username, broadcastMessage))
         callback()
     })
 
     // Server receiving location event
     socket.on('sendLocation', (coords, callback) => {
-        // Server emitting location message event (everyone)
-        io.emit('locationMessage', generateMessage(`https://google.com/maps?q=${coords.latitude},${coords.longitude}`))
+        // get user by their socket id
+        const user = getUser(socket.id)
+
+
+        // Server emitting location message event (everyone in room)
+        io.to(user.room).emit('locationMessage', generateMessage(user.username, `https://google.com/maps?q=${coords.latitude},${coords.longitude}`))
         callback()
     })
 
     // Event for when get socket get disconnected
     socket.on('disconnect', () => {
+        // removing user by their socket id
         const user = removeUser(socket.id)
 
+        // if there was a user, then emit message event to everyone in that room only
         if (user) {
-            io.to(user.room).emit('message', generateMessage(`${user.username} has left chat...`))
+            // Server emitting message event (everyone in room)
+            io.to(user.room).emit('message', generateMessage('Robot', `${user.username} has left chat...`))
         }        
     })
 
