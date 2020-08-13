@@ -2,8 +2,8 @@ const users = []
 
 const addUser = ({ id, username, room }) => {
     // clean the data
-    username = username.trim().toLowerCase()
-    room = room.trim().toLowerCase()
+    // username = username.trim().toLowerCase()
+    // room = room.trim().toLowerCase()
 
     // validate data
     if (!username || !room) {
@@ -14,11 +14,11 @@ const addUser = ({ id, username, room }) => {
 
     // Check for existing user
     const existingUser = users.find((user) => {
-        return user.room === room && user.username === username
+        return user.room === room && user.username.trim().toLowerCase() === username.trim().toLowerCase()
     })
 
     // validate username
-    if (existingUser || username === "robot") {
+    if (existingUser || username.trim().toLowerCase() === "rosie") {
         return {
             error: 'Username is in use!'
         }
@@ -51,7 +51,7 @@ const getUser = (id) => {
 
 const getUsersInRoom = (room) => {
     // return list of users in parameter room
-    room = room.trim().toLowerCase()
+    // room = room.trim().toLowerCase()
     return users.filter(user => room == user.room)
 }
 

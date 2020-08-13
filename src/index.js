@@ -35,10 +35,11 @@ io.on('connect', (socket) => {
 
         // allows to join a room
         socket.join(user.room)
+
         // Server emitting message event
-        socket.emit('message', generateMessage('Robot', `Welcome ${user.username}!`))
+        socket.emit('message', generateMessage('Rosie', `Welcome ${user.username}! My name is Rosie and I'll be the Admin of this chat :)`))
         // Server emitting message to everyone in a particular room except that single socket (new user) 
-        socket.broadcast.to(user.room).emit('message', generateMessage('Robot', `${user.username} has entered the chat...`))
+        socket.broadcast.to(user.room).emit('message', generateMessage('Rosie', `${user.username} has entered the chat...`))
 
         // Server emitting room data (everyone in room)
         io.to(user.room).emit('roomData', {
@@ -85,7 +86,7 @@ io.on('connect', (socket) => {
         // if there was a user, then emit message event to everyone in that room only
         if (user) {
             // Server emitting message event (everyone in room)
-            io.to(user.room).emit('message', generateMessage('Robot', `${user.username} has left the chat...`))
+            io.to(user.room).emit('message', generateMessage('Rosie', `${user.username} has left the chat...`))
             // Server emitting room data (everyone in room)
             io.to(user.room).emit('roomData', {
                 room: user.room,
