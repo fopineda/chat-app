@@ -17,7 +17,7 @@ _Windows: https://treehouse.github.io/installation-guides/windows/node-windows.h
 
 _Mac: https://treehouse.github.io/installation-guides/mac/node-mac.html_
 
-__Node Rocks 💚 !__
+__Node rocks 💚 !__
 
 
 1. Clone chat-app github repo
@@ -36,7 +36,7 @@ __Node Rocks 💚 !__
     ```bash
     npm start
     ```
-5. If no errors cam up, then the app should be running on your local machine (computer). Go to http://localhost:3000/ on your browser.
+5. If no errors came up, then the app should be running on your local machine (computer). Go to http://localhost:3000/ on your browser.
 
 
 _Note: If you want to run the app in dev mode, then run "npm run dev" instead of "npm start" for step 4. Dev mode is just normal mode with nodemon activated._
