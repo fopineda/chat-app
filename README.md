@@ -17,7 +17,7 @@ _Windows: https://treehouse.github.io/installation-guides/windows/node-windows.h
 
 _Mac: https://treehouse.github.io/installation-guides/mac/node-mac.html_
 
-__Node Rocks 💚!__
+__Node Rocks 💚 !__
 
 
 1. Clone chat-app github repo
