@@ -42,5 +42,12 @@ __Node rocks 💚 !__
 _Note: If you want to run the app in dev mode, then run "npm run dev" instead of "npm start" for step 4. Dev mode is just normal mode with nodemon activated._
 
 
+## Demo
+Link: https://pineda-chat-app.herokuapp.com/
+
+
+
+<!-- ![Menu](/readme-images/menu.png) -->
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
