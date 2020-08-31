@@ -45,9 +45,9 @@ _Note: If you want to run the app in dev mode, then run "npm run dev" instead of
 ## Demo
 Link: https://pineda-chat-app.herokuapp.com/
 
+![Menu](https://github.com/fopineda/chat-app/blob/master/readme-images/menu.png?raw=true)
 
-
-<!-- ![Menu](/readme-images/menu.png) -->
+![chat-room](https://github.com/fopineda/chat-app/blob/master/readme-images/chat-room.png?raw=true)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
